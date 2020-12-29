@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,9 +19,15 @@ import java.util.List;
 public class SinhVienAdapter extends BaseAdapter {
 
     List<SinhVien> items;
+    boolean visibility = false;
 
     public SinhVienAdapter(List<SinhVien> items) {
         this.items = items;
+    }
+
+    public SinhVienAdapter(List<SinhVien> items, boolean visibility) {
+        this.items = items;
+        this.visibility = visibility;
     }
 
     @Override
@@ -46,17 +53,15 @@ public class SinhVienAdapter extends BaseAdapter {
 
         TextView name = view.findViewById(R.id.name);
         TextView mssv = view.findViewById(R.id.mssv);
-//        TextView date = view.findViewById(R.id.ngaysinh);
         TextView email = view.findViewById(R.id.email);
-//        TextView diachi = view.findViewById(R.id.diachi);
+        CheckBox checkBox = view.findViewById(R.id.check);
 
         SinhVien sv = items.get(i);
         name.setText(sv.getHoten());
         mssv.setText(sv.getMssv());
-//        date.setText(sv.getNgaysinh());
         email.setText(sv.getEmail());
-//        diachi.setText(sv.getDiachi());
 
+        checkBox.setVisibility(visibility ? View.VISIBLE : View.INVISIBLE);
         return view;
     }
 }

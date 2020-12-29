@@ -7,16 +7,18 @@ public class SinhVien {
     private String ngaysinh;
     private String email;
     private String diachi;
+    private boolean check = false;
 
     public SinhVien() {}
 
-    public SinhVien(int ID, String mssv, String hoten, String ngaysinh, String email, String diachi) {
+    public SinhVien(int ID, String mssv, String hoten, String ngaysinh, String email, String diachi, boolean check) {
         this.ID = ID;
         this.mssv = mssv;
         this.hoten = hoten;
         this.ngaysinh = ngaysinh;
         this.email = email;
         this.diachi = diachi;
+        this.check = check;
     }
 
     public long getID() {
@@ -65,5 +67,13 @@ public class SinhVien {
 
     public void setDiachi(String diachi) {
         this.diachi = diachi;
+    }
+
+    public boolean isCheck() {
+        return check;
+    }
+
+    public void setCheck(boolean check) {
+        this.check = check;
     }
 }

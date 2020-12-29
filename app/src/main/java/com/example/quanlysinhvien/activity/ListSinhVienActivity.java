@@ -35,6 +35,8 @@ public class ListSinhVienActivity extends AppCompatActivity {
     List<SinhVien> items;
     ListView listView;
     SinhVienAdapter adapter;
+    SinhVienAdapter adapter1;
+    MenuItem itemRemove;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +79,7 @@ public class ListSinhVienActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        itemRemove = menu.findItem(R.id.remove);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -114,6 +117,10 @@ public class ListSinhVienActivity extends AppCompatActivity {
             Intent intent = new Intent(ListSinhVienActivity.this, AddActivity.class);
             startActivityForResult(intent, 123);
         }else if(id == R.id.action_all){
+            SinhVienAdapter adapter = new SinhVienAdapter(items);
+            listView.setAdapter(adapter);
+        }else if(id == R.id.remove){
+            itemRemove.setVisible(false);
             SinhVienAdapter adapter = new SinhVienAdapter(items);
             listView.setAdapter(adapter);
         }
@@ -218,6 +225,7 @@ public class ListSinhVienActivity extends AppCompatActivity {
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.add(0, 1, 0, "Cập nhật");
         menu.add(0, 2, 0, "Xóa");
+        menu.add(0, 3, 0, "Xóa nhiều");
     }
 
     @Override
@@ -245,15 +253,22 @@ public class ListSinhVienActivity extends AppCompatActivity {
                 int r = db.delete("SinhVien", "ID = " + recId, null);
                 db.setTransactionSuccessful();
 
-                items = new ArrayList<>();
-                getData();
+                int i = 0;
+                for(; i < items.size(); i++)
+                    if(items.get(i).getID() == recId) break;
 
+                items.remove(i);
                 adapter.notifyDataSetChanged();
             } catch (Exception ex) {
                 ex.printStackTrace();
             } finally {
                 db.endTransaction();
             }
+        }else if (id == 3) {
+            itemRemove.setVisible(true);
+
+            adapter1 = new SinhVienAdapter(items, true);
+            listView.setAdapter(adapter1);
         }
         return super.onContextItemSelected(item);
     }

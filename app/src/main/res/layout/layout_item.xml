@@ -33,4 +33,11 @@
         android:text="mail"
         />
 
+    <CheckBox
+        android:id="@+id/check"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:checked="false"
+        android:visibility="invisible"/>
 </RelativeLayout>
